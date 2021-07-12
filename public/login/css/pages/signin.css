@@ -10,7 +10,7 @@ body{ background: ;color:#ffffff; font: 13px/1.7em 'Open Sans';}
 
 
 .account-container {
-	width: 900px; 
+	width: 600px; 
 	display: block;
 	margin: 0 auto 0 auto;
 	
@@ -18,9 +18,9 @@ body{ background: ;color:#ffffff; font: 13px/1.7em 'Open Sans';}
 	
 	border: 1px solid #d5d5d5;
 	
-	-webkit-border-radius: 5px;
+	-webkit-border-radius: 15px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: 15px;
 
 	box-shadow:  0px 0px 2px #dadada, inset 0px -3px 0px #e6e6e6;
 }
@@ -87,13 +87,13 @@ span.login-checkbox {
 span.login-checkbox > input[type='checkbox'] {
     opacity: 0;
     float: left;
-    width: 15px;
+    width: 20px;
 }
 
 span.login-checkbox > input[type='checkbox'] + label {    
     clear: none;
     
-	height: 15px; 
+	height: 20px; 
 	display: block;
     padding: 0 0 0 22px;
     margin: 0;
