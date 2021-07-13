@@ -50,10 +50,10 @@ $active_record = TRUE;
 
 $ondevelop = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '';
-$db['default']['database'] = 'hms';
+$db['default']['hostname'] = 'sql3.freesqldatabase.com';
+$db['default']['username'] = 'sql3424941';
+$db['default']['password'] = 'uc7WZgeugC';
+$db['default']['database'] = 'sql3424941';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
