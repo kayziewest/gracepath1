@@ -157,9 +157,9 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 			$this->_session_id = $session_id;
 
 			$this->_db
-				->select('data')
+				->select('user_data')
 				->from($this->_config['save_path'])
-				->where('id', $session_id);
+				->where('session_id', $session_id);
 
 			if ($this->_config['match_ip'])
 			{
