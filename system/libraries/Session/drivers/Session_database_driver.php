@@ -180,8 +180,8 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 			// PITA to work with, so we use base64-encoded data in a TEXT
 			// field instead.
 			$result = ($this->_platform === 'postgre')
-				? base64_decode(rtrim($result->data))
-				: $result->data;
+				? base64_decode(rtrim($result->user_data))
+				: $result->user_data;
 
 			$this->_fingerprint = md5($result);
 			$this->_row_exists = TRUE;
@@ -299,7 +299,7 @@ class CI_Session_database_driver extends CI_Session_driver implements SessionHan
 			// Prevent previous QB calls from messing with our queries
 			$this->_db->reset_query();
 
-			$this->_db->where('id', $session_id);
+			$this->_db->where('session_id', $session_id);
 			if ($this->_config['match_ip'])
 			{
 				$this->_db->where('ip_address', $_SERVER['REMOTE_ADDR']);
