@@ -197,7 +197,7 @@ if($this->session->userdata('module') == "change_pwd"){$change_pwd_mod = "class=
 
 
 <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">                
+            <aside class="left-side sidebar-offcanvas" style="min-height: 1114px;margin-top: 25px;">                
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->

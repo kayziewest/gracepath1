@@ -175,7 +175,7 @@
                         <div class="col-xs-6">
                             <p class="lead">Note:</p>
                             <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-                                <i>Amount shown are in FIJI dollar currency.</i>
+                                <i>Amount shown are in Nigerian Naira currency.</i>
                             </p>
                         </div><!-- /.col -->
                         <div class="col-xs-6">

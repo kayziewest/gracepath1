@@ -38,7 +38,7 @@ template {
 }
 
 html {
-  font-family: sans-serif;
+  font-family: "Gill Sans Extrabold", sans-serif;
   -webkit-text-size-adjust: 100%;
       -ms-text-size-adjust: 100%;
 }
@@ -61,8 +61,8 @@ a:hover {
 }
 
 h1 {
-  margin: 0.67em 0;
-  font-size: 2em;
+  margin: 0.80em 0;
+  font-size: 4em;
 }
 
 abbr[title] {

@@ -1,117 +1,125 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
+<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-class User_model extends CI_Model{
-	
-	public function __construct(){
-		parent::__construct();	
+class User_model extends CI_Model
+{
+
+	public function __construct()
+	{
+		parent::__construct();
 	}
-	
-	public function getAll($limit = 10, $offset = 0){
+
+	public function getAll($limit = 10, $offset = 0)
+	{
 		$this->db->select("A.user_id,
 					concat(D.cValue,' ',A.firstname,' ',A.middlename,' ',A.lastname) as name,
 					C.designation,
 					B.dept_name,
 					A.email_address,
-					A.InActive",false);
-		$where = "(A.lastname like '%".$this->session->userdata("search_user")."%' 
-					or A.firstname like '%".$this->session->userdata("search_user")."%' 
-					or A.user_id like '%".$this->session->userdata("search_user")."%' 
-					or C.designation like '%".$this->session->userdata("search_user")."%' 
-					or B.dept_name like '%".$this->session->userdata("search_user")."%' 
-					or A.email_address like '%".$this->session->userdata("search_user")."%' 
-					or A.InActive like '%".$this->session->userdata("search_user")."%')";
+					A.InActive", false);
+		$where = "(A.lastname like '%" . $this->session->userdata("search_user") . "%' 
+					or A.firstname like '%" . $this->session->userdata("search_user") . "%' 
+					or A.user_id like '%" . $this->session->userdata("search_user") . "%' 
+					or C.designation like '%" . $this->session->userdata("search_user") . "%' 
+					or B.dept_name like '%" . $this->session->userdata("search_user") . "%' 
+					or A.email_address like '%" . $this->session->userdata("search_user") . "%' 
+					or A.InActive like '%" . $this->session->userdata("search_user") . "%')";
 		$this->db->where($where);
-		$this->db->join("department B","B.department_id = A.department","left outer");
-		$this->db->join("designation C","C.designation_id = A.designation","left outer");
-		$this->db->join("system_parameters D","D.param_id = A.title","left outer");
-		$this->db->order_by('A.user_id','asc');
+		$this->db->join("department B", "B.department_id = A.department", "left outer");
+		$this->db->join("designation C", "C.designation_id = A.designation", "left outer");
+		$this->db->join("system_parameters D", "D.param_id = A.title", "left outer");
+		$this->db->order_by('A.user_id', 'asc');
 		$query = $this->db->get("users A", $limit, $offset);
 		return $query->result();
 	}
-	
-	public function count_all(){
+
+	public function count_all()
+	{
 		$this->db->select("A.user_id,
 					concat(D.cValue,' ',A.firstname,' ',A.middlename,' ',A.lastname) as name,
 					C.designation,
 					B.dept_name,
 					A.email_address,
-					A.InActive",false);
-		$where = "(A.lastname like '%".$this->session->userdata("search_user")."%' 
-					or A.firstname like '%".$this->session->userdata("search_user")."%' 
-					or A.user_id like '%".$this->session->userdata("search_user")."%' 
-					or C.designation like '%".$this->session->userdata("search_user")."%' 
-					or B.dept_name like '%".$this->session->userdata("search_user")."%' 
-					or A.email_address like '%".$this->session->userdata("search_user")."%' 
-					or A.InActive like '%".$this->session->userdata("search_user")."%')";
+					A.InActive", false);
+		$where = "(A.lastname like '%" . $this->session->userdata("search_user") . "%' 
+					or A.firstname like '%" . $this->session->userdata("search_user") . "%' 
+					or A.user_id like '%" . $this->session->userdata("search_user") . "%' 
+					or C.designation like '%" . $this->session->userdata("search_user") . "%' 
+					or B.dept_name like '%" . $this->session->userdata("search_user") . "%' 
+					or A.email_address like '%" . $this->session->userdata("search_user") . "%' 
+					or A.InActive like '%" . $this->session->userdata("search_user") . "%')";
 		$this->db->where($where);
-		$this->db->join("department B","B.department_id = A.department","left outer");
-		$this->db->join("designation C","C.designation_id = A.designation","left outer");
-		$this->db->join("system_parameters D","D.param_id = A.title","left outer");
-		$this->db->order_by('A.user_id','asc');
+		$this->db->join("department B", "B.department_id = A.department", "left outer");
+		$this->db->join("designation C", "C.designation_id = A.designation", "left outer");
+		$this->db->join("system_parameters D", "D.param_id = A.title", "left outer");
+		$this->db->order_by('A.user_id', 'asc');
 		$query = $this->db->get("users A");
 		return $query->num_rows();
 	}
-	
-	public function lastUserID(){
+
+	public function lastUserID()
+	{
 		$this->db->select("(cValue + 1) as cValue");
-		$this->db->where(array('cCode'=>'employee_no','InActive'=>0));
+		$this->db->where(array('cCode' => 'employee_no', 'InActive' => 0));
 		$query = $this->db->get("system_option");
-		return $query->row();	
+		return $query->row();
 	}
-	
-	
-	public function validate_username(){
+
+
+	public function validate_username()
+	{
 		$this->db->select("username");
 		$this->db->where(array(
 			'username'		=>		$this->input->post('username'),
 			'InActive'		=>		0
-		));	
+		));
 		$query = $this->db->get("users");
-		if($query->num_rows() > 0){
+		if ($query->num_rows() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public function validate_email(){
+
+	public function validate_email()
+	{
 		$this->db->select("email_address");
 		$this->db->where(array(
 			'email_address'	=>	$this->input->post('email'),
 			'InActive'		=>	0
-		));	
+		));
 		$query = $this->db->get("users");
-		if($query->num_rows() > 0){
+		if ($query->num_rows() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public function validate_name(){
+
+	public function validate_name()
+	{
 		$this->db->select("lastname");
 		$this->db->where(array(
 			'lastname'		=>		$this->input->post('lastname'),
 			'firstname'		=>		$this->input->post('firstname'),
 			'InActive'		=>		0
-		));	
+		));
 		$query = $this->db->get("users");
-		if($query->num_rows() > 0){
+		if ($query->num_rows() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public function save_user(){
+
+	public function save_user()
+	{
 		$age = 0;
 		$dob = strtotime($this->input->post('birthday'));
 		$tdate = strtotime(date("Y-m-d"));
-		while( $tdate > $dob = strtotime('+1 year', $dob))
-        {
-                ++$age;
-        }
-		
+		while ($tdate > $dob = strtotime('+1 year', $dob)) {
+			++$age;
+		}
+
 		$this->data = array(
 			'user_id'			=>		$this->input->post('userid'),
 			'department'		=>		$this->input->post('department'),
@@ -136,82 +144,86 @@ class User_model extends CI_Model{
 			'username'			=>		$this->input->post('username'),
 			'password'			=>		$this->input->post('password'),
 			'InActive'			=>		0
-		);	
-		$this->db->insert("users",$this->data);
-		
+		);
+		$this->db->insert("users", $this->data);
 	}
-	
-	
-	public function updateAutoNum(){
+
+
+	public function updateAutoNum()
+	{
 		$this->db->where(array(
 			'cCode'			=>		'employee_no',
 			'InActive'		=>		0
-		));	
+		));
 		$this->data = array('cValue'	=>		$this->input->post('userID2'));
-		$this->db->update("system_option",$this->data);
+		$this->db->update("system_option", $this->data);
 	}
-	
-	public function getUser($id){
-		$this->db->where("user_id",$id);
+
+	public function getUser($id)
+	{
+		$this->db->where("user_id", $id);
 		$query = $this->db->get("users");
-		return $query->row();	
+		return $query->row();
 	}
-	
-	public function validate_username_edit(){
+
+	public function validate_username_edit()
+	{
 		$this->db->select("username");
 		$this->db->where(array(
 			'username'		=>		$this->input->post('username'),
 			'InActive'		=>		0,
 			'user_id !='	=>		$this->input->post('userid')
-		));	
+		));
 		$query = $this->db->get("users");
-		if($query->num_rows() > 0){
+		if ($query->num_rows() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public function validate_email_edit(){
+
+	public function validate_email_edit()
+	{
 		$this->db->select("email_address");
 		$this->db->where(array(
 			'email_address'	=>	$this->input->post('email'),
 			'InActive'		=>	0,
 			'user_id !='	=>		$this->input->post('userid')
-		));	
+		));
 		$query = $this->db->get("users");
-		if($query->num_rows() > 0){
+		if ($query->num_rows() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public function validate_name_edit(){
+
+	public function validate_name_edit()
+	{
 		$this->db->select("lastname");
 		$this->db->where(array(
 			'lastname'		=>		$this->input->post('lastname'),
 			'firstname'		=>		$this->input->post('firstname'),
 			'InActive'		=>		0,
 			'user_id !='	=>		$this->input->post('userid')
-		));	
+		));
 		$query = $this->db->get("users");
-		if($query->num_rows() > 0){
+		if ($query->num_rows() > 0) {
 			return true;
-		}else{
+		} else {
 			return false;
-		}	
+		}
 	}
-	
-	public function edit_user(){
+
+	public function edit_user()
+	{
 		$age = 0;
 		$dob = strtotime($this->input->post('birthday'));
 		$tdate = strtotime(date("Y-m-d"));
-		while( $tdate > $dob = strtotime('+1 year', $dob))
-        {
-                ++$age;
-        }
-		
+		while ($tdate > $dob = strtotime('+1 year', $dob)) {
+			++$age;
+		}
+
 		$this->data = array(
 			'department'		=>		$this->input->post('department'),
 			'designation'		=>		$this->input->post('designation'),
@@ -233,56 +245,46 @@ class User_model extends CI_Model{
 			'birthplace'		=>		$this->input->post('birthplace'),
 			'username'			=>		$this->input->post('username'),
 			'email_address'		=>		$this->input->post('email')
-		);	
+		);
 		$this->db->where('user_id', $this->input->post('userid'));
-		$this->db->update("users",$this->data);
+		$this->db->update("users", $this->data);
 	}
-	
-	public function delete($id){
-		$this->db->where('user_id',$id);
-		$this->data = array('InActive'=>1);
-		$this->db->update("users",$this->data);	
+
+	public function delete($id)
+	{
+		$this->db->where('user_id', $id);
+		$this->data = array('InActive' => 1);
+		$this->db->update("users", $this->data);
 	}
-	
-	public function activate($id){
-		$this->db->where('user_id',$id);
-		$this->data = array('InActive'=>0);
-		$this->db->update("users",$this->data);	
+
+	public function activate($id)
+	{
+		$this->db->where('user_id', $id);
+		$this->data = array('InActive' => 0);
+		$this->db->update("users", $this->data);
 	}
-	
-	public function uploadImg($image_data = array(),$emp_id){
+
+	public function uploadImg($image_data = array(), $emp_id)
+	{
 		$this->data = array(
 			'picture'	=>		$image_data['file_name']
 		);
-		$this->db->where('user_id',$emp_id);
-		$this->db->update('users',$this->data);
-		
-
+		$this->db->where('user_id', $emp_id);
+		$this->db->update('users', $this->data);
 	}
 
 	public function changepassword()
 	{
 		$this->data = array(
 			'password'				=>		md5($this->input->post('newpassword'))
-		);	
-		$this->db->where('user_id',$this->input->post('userid'));
-		$result = $this->db->update("users",$this->data);
+		);
+		$this->db->where('user_id', $this->input->post('userid'));
+		$result = $this->db->update("users", $this->data);
 
-		if($result)
-		{
+		if ($result) {
 			return TRUE;
-		}
-		else
-		{
+		} else {
 			return FALSE;
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }
