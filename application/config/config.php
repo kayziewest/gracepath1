@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://gracepath1.herokuapp.com/gracepath1/';
+$config['base_url']	= 'https://gracepath1.herokuapp.com/';
 
 /*
 |--------------------------------------------------------------------------
